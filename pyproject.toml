@@ -1,0 +1,10 @@
+[project]
+name = "personal-ai-knowledge-reinforcer"
+version = "0.1.0"
+description = "A local-first personal AI learning and knowledge reinforcement agent."
+requires-python = ">=3.11,<3.12"
+
+dependencies = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
