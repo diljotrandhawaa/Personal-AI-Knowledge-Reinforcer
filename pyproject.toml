@@ -4,7 +4,9 @@ version = "0.1.0"
 description = "A local-first personal AI learning and knowledge reinforcement agent."
 requires-python = ">=3.11,<3.12"
 
-dependencies = []
+dependencies = [
+    "ollama>=0.6.2",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
