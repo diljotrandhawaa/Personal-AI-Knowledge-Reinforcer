@@ -25,6 +25,7 @@ data/private/
 data/raw/
 personal_data/
 notes/private/
+data/chroma/
 
 # Local databases / vector stores
 *.db
