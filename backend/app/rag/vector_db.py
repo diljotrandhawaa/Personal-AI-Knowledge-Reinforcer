@@ -11,19 +11,16 @@ notes_collection = client.get_or_create_collection(
     name="notes"
 )
 
-def add_note(note_id: str, note_text: str, metadata: dict):
+def store_chunk(chunk_id: str, chunk_text: str, metadata: dict):
 
-    note_embedding = embed_model.get_text_embedding(note_text)
+    chunk_embedding = embed_model.get_text_embedding(chunk_text)
 
     notes_collection.add(
-        ids=[note_id],
-        documents=[note_text],
-        embeddings=[note_embedding],
+        ids=[chunk_id],
+        documents=[chunk_text],
+        embeddings=[chunk_embedding],
         metadatas=[metadata]
     )
-
-    print("Below Note is added:")
-    print(note_text)
 
 def search_notes(query: str, n_results: int = 3):
 
