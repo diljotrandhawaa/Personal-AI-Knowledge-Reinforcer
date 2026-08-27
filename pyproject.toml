@@ -8,7 +8,8 @@ dependencies = [
     "ollama>=0.6.2",
     "llama-index",
     "chromadb",
-    "llama-index-embeddings-ollama"
+    "llama-index-embeddings-ollama",
+    "llama-index-llms-ollama"
 ]
 
 [tool.pytest.ini_options]

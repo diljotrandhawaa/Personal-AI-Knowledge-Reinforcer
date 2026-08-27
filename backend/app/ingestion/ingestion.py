@@ -1,5 +1,5 @@
-from chunker import chunk_text
-from vector_db import store_chunk, search_notes
+from app.ingestion.chunker import chunk_text
+from app.rag.vector_db import store_chunk, search_notes
 from datetime import date
 
 def ingest_note(note_id: str, note_text: str):

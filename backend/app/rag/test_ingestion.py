@@ -1,4 +1,4 @@
-from ingestion import ingest_note
+from app.ingestion.ingestion import ingest_note
 
 note_text = """Neural networks are machine learning models made of layers of connected units. Each connection has a numerical weight, and those weights determine how strongly information moves through the network. When data enters the model, it passes through the input layer and then through one or more hidden layers. Each layer performs mathematical operations on the incoming values, usually multiplying them by weights, adding biases, and applying an activation function.
 
