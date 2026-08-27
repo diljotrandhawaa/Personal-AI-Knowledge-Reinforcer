@@ -31,4 +31,5 @@ def search_notes(query: str, n_results: int = 3):
         n_results=n_results
     )
 
+# print(search_notes("What does gradients mean?"))
     
