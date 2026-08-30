@@ -1,5 +1,3 @@
-from app.rag.vector_db import search_notes
-from app.models.llm import generate_response
 
 def build_prompt(question: str, retrieved_chunks: list[str]):
 
