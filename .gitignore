@@ -26,6 +26,7 @@ data/raw/
 personal_data/
 notes/private/
 data/chroma/
+P-AI Learning Project/data/chroma/
 
 # Local databases / vector stores
 *.db

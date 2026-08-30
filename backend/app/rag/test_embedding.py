@@ -1,6 +1,9 @@
 from llama_index.embeddings.ollama import OllamaEmbedding
 
-embedding_model = OllamaEmbedding(model_name="embeddinggemma:latest")
+embedding_model = OllamaEmbedding(
+    model_name="embeddinggemma:latest",
+    base_url="http://127.0.0.1:11435"
+)
 
 print("Testing EmbeddingGemma...")
 

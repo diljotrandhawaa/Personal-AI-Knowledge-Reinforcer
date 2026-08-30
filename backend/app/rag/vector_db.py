@@ -1,7 +1,10 @@
 import chromadb
 from llama_index.embeddings.ollama import OllamaEmbedding
 
-embed_model = OllamaEmbedding(model_name="embeddinggemma:latest")
+embed_model = OllamaEmbedding(
+    model_name="embeddinggemma:latest",
+    base_url="http://127.0.0.1:11435"
+)
 
 client = chromadb.PersistentClient(
     path="data/chroma"
