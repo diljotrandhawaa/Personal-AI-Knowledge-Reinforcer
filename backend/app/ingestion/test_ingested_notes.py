@@ -6,9 +6,9 @@ records = notes_collection.get(
     include=["documents", "metadatas"]
 )
 
-print(records["ids"][5])
+print(records["ids"][6])
 
-print(records["documents"][5])
+print(records["documents"][6])
 
 # query1 = "How does backpropagation calculate gradients?"
 # result1 = search_notes(query1)
