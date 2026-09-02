@@ -2,13 +2,25 @@ from app.rag.vector_db import search_notes, notes_collection
 
 print(notes_collection.count())
 
+notes_collection.delete(
+    ids=["data_220_week_2_chunk_0"]
+)
+
 records = notes_collection.get(
     include=["documents", "metadatas"]
 )
 
-print(records["ids"][6])
+for i in range(5, notes_collection.count()):
 
-print(records["documents"][6])
+    print(records["ids"][i])
+
+    print(records["documents"][i])
+
+    print("\n----------------------------------------\n")
+
+# print(records["ids"][5])
+
+# print(records["documents"][6])
 
 # query1 = "How does backpropagation calculate gradients?"
 # result1 = search_notes(query1)

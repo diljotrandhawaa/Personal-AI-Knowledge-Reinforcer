@@ -25,7 +25,7 @@ def store_chunk(chunk_id: str, chunk_text: str, metadata: dict):
         metadatas=[metadata]
     )
 
-def search_notes(query: str, n_results: int = 3):
+def search_notes(query: str, n_results: int = 1):
 
     query_embedding = embed_model.get_query_embedding(query)
 
