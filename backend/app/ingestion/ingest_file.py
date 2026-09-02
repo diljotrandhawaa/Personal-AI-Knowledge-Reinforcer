@@ -21,3 +21,17 @@ def ingest_pdf_file(file_path: str):
     note_id = file.stem
 
     ingest_note(note_id, pdf_text)
+
+
+def ingest_file(file_path: str):
+
+    extension = Path(file_path).suffix.lower()
+
+    if extension == ".txt":
+        ingest_txt_file(file_path)
+
+    elif extension == ".pdf":
+        ingest_pdf_file(file_path)
+
+    else:
+        raise ValueError(f"Unsupported file type: {extension}")
