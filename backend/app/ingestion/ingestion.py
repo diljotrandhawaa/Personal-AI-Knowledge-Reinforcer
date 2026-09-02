@@ -1,8 +1,22 @@
 from app.ingestion.chunker import chunk_text
-from app.rag.vector_db import store_chunk, search_notes
+from app.rag.vector_db import store_chunk, search_notes, notes_collection
 from datetime import date
 
+def note_exists(note_id: str) -> bool:
+        
+        result = notes_collection.get(
+            where={"note_id": note_id}
+        )
+
+        return len(result["ids"]) > 0
+
+
+
 def ingest_note(note_id: str, note_text: str):
+
+    if note_exists(note_id):
+        print(f"Note '{note_id}' has already been ingested.")
+        return
 
     nodes = chunk_text(note_text)
 

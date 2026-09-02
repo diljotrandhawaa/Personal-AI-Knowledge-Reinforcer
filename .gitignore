@@ -28,6 +28,7 @@ notes/private/
 backend/data/
 data/chroma/
 P-AI Learning Project/data/chroma/
+data/
 
 # Local databases / vector stores
 *.db

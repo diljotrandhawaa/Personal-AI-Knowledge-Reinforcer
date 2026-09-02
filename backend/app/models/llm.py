@@ -13,6 +13,7 @@ llm = Ollama(
     thinking=False
 )
 
+# This function basically ask LLM a question. It adds a "no_think" at the end.
 def generate_response(prompt: str):
 
     prompt = prompt + "\n/no_think"
