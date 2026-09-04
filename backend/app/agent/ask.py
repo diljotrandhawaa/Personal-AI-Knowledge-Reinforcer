@@ -1,4 +1,4 @@
-from prompt_builder import build_prompt
+from app.agent.prompt_builder import build_prompt
 from app.rag.vector_db import search_notes
 from app.models.llm import generate_response
 
@@ -6,6 +6,7 @@ def ask_question(question: str):
 
     # This is the list of 3 closest texts in the VectorDB
     retrieved_text = search_notes(question)['documents'][0]
+    print(retrieved_text)
 
     # This is the Prompt string. list of 3 closest texts is joined into a string with the question. 
     prompt = build_prompt(question, retrieved_text)

@@ -10,7 +10,7 @@ records = notes_collection.get(
     include=["documents", "metadatas"]
 )
 
-for i in range(5, notes_collection.count()):
+for i in range(0, notes_collection.count()):
 
     print(records["ids"][i])
 

@@ -1,13 +1,17 @@
 import chromadb
 from llama_index.embeddings.ollama import OllamaEmbedding
+from pathlib import Path
 
 embed_model = OllamaEmbedding(
     model_name="embeddinggemma:latest",
     base_url="http://127.0.0.1:11435"
 )
 
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+CHROMA_PATH = PROJECT_ROOT / "data" / "chroma"
+
 client = chromadb.PersistentClient(
-    path="data/chroma"
+    path=str(CHROMA_PATH)
 )
 
 notes_collection = client.get_or_create_collection(

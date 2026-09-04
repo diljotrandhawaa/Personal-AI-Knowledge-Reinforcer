@@ -8,6 +8,6 @@ from ask import ask_question
 
 # print(ask_question(ques2))
 
-ques3 = "What the hell is Neurogum"
+ques3 = "How is Neurogum helpful?"
 
 print(ask_question(ques3))
