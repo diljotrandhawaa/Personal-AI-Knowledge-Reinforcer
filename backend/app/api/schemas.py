@@ -7,3 +7,8 @@ class AskRequest(BaseModel):
 
 class AskResponse(BaseModel):
     answer: str
+
+class IngestResponse(BaseModel):
+    status: str
+    filename: str
+    message: str

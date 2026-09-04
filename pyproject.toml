@@ -10,7 +10,8 @@ dependencies = [
     "chromadb",
     "llama-index-embeddings-ollama",
     "llama-index-llms-ollama",
-    "docling"
+    "docling",
+    "python-multipart"
 ]
 
 [tool.pytest.ini_options]

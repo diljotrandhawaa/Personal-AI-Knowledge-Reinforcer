@@ -2,9 +2,9 @@ from app.rag.vector_db import search_notes, notes_collection
 
 print(notes_collection.count())
 
-notes_collection.delete(
-    ids=["data_220_week_2_chunk_0"]
-)
+# notes_collection.delete(
+#     ids=["Essential_Oils_chunk_0"]
+# )
 
 records = notes_collection.get(
     include=["documents", "metadatas"]

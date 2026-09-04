@@ -16,7 +16,7 @@ def ingest_note(note_id: str, note_text: str):
 
     if note_exists(note_id):
         print(f"Note '{note_id}' has already been ingested.")
-        return
+        return "This Note has already been ingested in the past."
 
     nodes = chunk_text(note_text)
 
@@ -38,3 +38,4 @@ def ingest_note(note_id: str, note_text: str):
         print("Chunk text to be stored:", chunk_content)
         print("------------------------------------------------------------")
         print("\n")
+        return "Note has been ingested successfully."
