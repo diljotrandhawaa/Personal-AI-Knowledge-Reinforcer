@@ -38,5 +38,27 @@ def search_notes(query: str, n_results: int = 1):
         n_results=n_results
     )
 
+def list_notes():
+    results = notes_collection.get(include=["metadatas"])
+
+    unique_notes = {}
+
+    for metadata in results["metadatas"]:
+        if not metadata:
+            continue
+
+        note_id = metadata.get("note_id")
+
+        if note_id and note_id not in unique_notes:
+            unique_notes[note_id] = {
+                "note_id": note_id,
+                "source": metadata.get("source")
+            }
+
+    return sorted(
+        unique_notes.values(),
+        key=lambda note: note["note_id"].lower()
+    )
+
 # print(search_notes("What does gradients mean?"))
     

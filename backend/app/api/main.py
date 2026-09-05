@@ -1,12 +1,11 @@
 import shutil
 import tempfile
 from pathlib import Path
+from app.rag.vector_db import list_notes
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
-
 from app.ingestion.ingest_file import ingest_file
-
-from app.api.schemas import AskRequest, AskResponse, IngestResponse
+from app.api.schemas import AskRequest, AskResponse, IngestResponse, DocumentListResponse
 
 app = FastAPI(
     title="Personal AI Agent API",
@@ -81,3 +80,17 @@ def health_check():
         "status": "healthy",
         "api": "running"
     }
+
+@app.get("/documents", response_model=DocumentListResponse)
+def get_documents():
+    try:
+        documents = list_notes()
+        return DocumentListResponse(documents=documents)
+
+    except Exception as error:
+        print(f"Error while listing documents: {error}")
+
+        raise HTTPException(
+            status_code=500,
+            detail="The stored documents could not be retrieved."
+        ) from error
