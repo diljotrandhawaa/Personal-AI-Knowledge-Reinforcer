@@ -1,11 +1,20 @@
 import shutil
 import tempfile
 from pathlib import Path
-from app.rag.vector_db import list_notes
+from app.rag.vector_db import list_notes, delete_note, search_notes
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from app.ingestion.ingest_file import ingest_file
-from app.api.schemas import AskRequest, AskResponse, IngestResponse, DocumentListResponse
+from app.api.schemas import (
+    AskRequest,
+    AskResponse,
+    DeleteDocumentResponse,
+    DocumentListResponse,
+    IngestResponse,
+    SearchRequest,
+    SearchResponse,
+    SearchResult,
+)
 
 app = FastAPI(
     title="Personal AI Agent API",
@@ -93,4 +102,70 @@ def get_documents():
         raise HTTPException(
             status_code=500,
             detail="The stored documents could not be retrieved."
+        ) from error
+
+@app.delete(
+    "/documents/{note_id}",
+    response_model=DeleteDocumentResponse
+)
+def delete_document(note_id: str):
+    try:
+        chunks_deleted = delete_note(note_id)
+
+        if chunks_deleted == 0:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Document '{note_id}' was not found."
+            )
+
+        return DeleteDocumentResponse(
+            status="success",
+            note_id=note_id,
+            chunks_deleted=chunks_deleted
+        )
+
+    except HTTPException:
+        raise
+
+    except Exception as error:
+        print(f"Error while deleting document: {error}")
+
+        raise HTTPException(
+            status_code=500,
+            detail="The document could not be deleted."
+        ) from error
+
+@app.post("/search", response_model=SearchResponse)
+def search_documents(request: SearchRequest):
+    try:
+        raw_results = search_notes(
+            query=request.query,
+            n_results=request.n_results
+        )
+
+        ids = raw_results["ids"][0]
+        documents = raw_results["documents"][0]
+        metadatas = raw_results["metadatas"][0]
+        distances = raw_results["distances"][0]
+
+        results = []
+
+        for index, chunk_id in enumerate(ids):
+            results.append(
+                SearchResult(
+                    chunk_id=chunk_id,
+                    document=documents[index],
+                    metadata=metadatas[index],
+                    distance=distances[index]
+                )
+            )
+
+        return SearchResponse(results=results)
+
+    except Exception as error:
+        print(f"Error while searching documents: {error}")
+
+        raise HTTPException(
+            status_code=500,
+            detail="The document search could not be completed."
         ) from error

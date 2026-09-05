@@ -60,5 +60,19 @@ def list_notes():
         key=lambda note: note["note_id"].lower()
     )
 
+def delete_note(note_id: str) -> int:
+    results = notes_collection.get(
+        where={"note_id": note_id}
+    )
+
+    chunk_ids = results["ids"]
+
+    if not chunk_ids:
+        return 0
+
+    notes_collection.delete(ids=chunk_ids)
+
+    return len(chunk_ids)
+
 # print(search_notes("What does gradients mean?"))
     
