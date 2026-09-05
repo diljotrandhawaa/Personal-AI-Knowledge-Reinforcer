@@ -21,6 +21,31 @@
             padding: 20px;
         }
 
+        .document-panel {
+            padding: 15px;
+            margin-bottom: 20px;
+            background: #f8fafc;
+            border: 1px solid #dddddd;
+            border-radius: 8px;
+        }
+
+        .document-panel h2 {
+            margin-top: 0;
+            font-size: 18px;
+        }
+
+        #upload-status {
+            margin-bottom: 0;
+        }
+
+        .success-text {
+            color: #166534;
+        }
+
+        .error-text {
+            color: #991b1b;
+        }
+
         #messages {
             min-height: 400px;
             max-height: 600px;
@@ -72,6 +97,25 @@
     <div class="chat-container">
         <h1>Personal AI Agent</h1>
 
+        <div class="document-panel">
+            <h2>Upload Knowledge</h2>
+
+            <form id="upload-form">
+                <input
+                    id="document-file"
+                    type="file"
+                    accept=".txt,.pdf"
+                    required
+                >
+
+                <button id="upload-button" type="submit">
+                    Upload
+                </button>
+            </form>
+
+            <p id="upload-status"></p>
+        </div>
+
         <div id="messages">
             <div class="message assistant">
                 Ask me something about your stored knowledge.
@@ -94,6 +138,10 @@
         const input = document.getElementById("question");
         const button = document.getElementById("send-button");
         const messages = document.getElementById("messages");
+        const uploadForm = document.getElementById("upload-form");
+        const documentFile = document.getElementById("document-file");
+        const uploadButton = document.getElementById("upload-button");
+        const uploadStatus = document.getElementById("upload-status");
 
         function addMessage(text, messageType) {
             const message = document.createElement("div");
@@ -154,6 +202,48 @@
             } finally {
                 button.disabled = false;
                 input.focus();
+            }
+        });
+        uploadForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const selectedFile = documentFile.files[0];
+
+            if (!selectedFile) {
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("file", selectedFile);
+
+            uploadButton.disabled = true;
+            uploadStatus.className = "";
+            uploadStatus.textContent = "Uploading and processing document...";
+
+            try {
+                const response = await fetch("/ingest", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(
+                        data.detail || "Document upload failed."
+                    );
+                }
+
+                uploadStatus.className = "success-text";
+                uploadStatus.textContent =
+                    `${data.filename} was ingested successfully.`;
+
+                documentFile.value = "";
+            } catch (error) {
+                uploadStatus.className = "error-text";
+                uploadStatus.textContent = error.message;
+            } finally {
+                uploadButton.disabled = false;
             }
         });
     </script>
