@@ -2,8 +2,10 @@ import shutil
 import tempfile
 from pathlib import Path
 from app.rag.vector_db import list_notes, delete_note, search_notes
+from app.agent.ask import ask_question
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi.responses import FileResponse
 from app.ingestion.ingest_file import ingest_file
 from app.api.schemas import (
     AskRequest,
@@ -169,3 +171,10 @@ def search_documents(request: SearchRequest):
             status_code=500,
             detail="The document search could not be completed."
         ) from error
+
+CHAT_PAGE = Path(__file__).resolve().parents[1] / "static" / "chat.html"
+
+
+@app.get("/chat", include_in_schema=False)
+def chat_page():
+    return FileResponse(CHAT_PAGE)
